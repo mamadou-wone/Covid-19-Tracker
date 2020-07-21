@@ -10,6 +10,31 @@ let deaths = document.getElementById('deaths');
 const apiUrl = 'https://disease.sh/v3/covid-19/countries/';
 const allCaseApi = 'https://disease.sh/v3/covid-19/all/';
 
+// const sortData = (data) => {
+
+//     const sortedData = [...data];
+//     sortData.sort((a, b) => {
+//         if (a.cases > b.cases) {
+//             return -1;
+//         } else {
+//             return 1;
+//         }
+//     });
+//     return sortData;
+
+// }
+
+
+function surround(number) {
+    if (number > 1000) {
+        return (number / 1000).toFixed(1) + 'K';
+    } else if (number > 10000000) {
+        return ((number) / 1000000).toFixed(1) + 'M'
+    } else {
+        return number;
+    }
+}
+
 
 function getAllCase() {
     let request = new XMLHttpRequest();
@@ -22,7 +47,7 @@ function getAllCase() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 let response = request.response;
-                document.querySelector('.totalCases').textContent = response.cases;
+                document.querySelector('.totalCases').textContent = response.cases > 10000000 ? ((response.cases) / 1000000).toFixed(1) + 'M' : response.cases;
                 document.querySelector('.recovered').textContent = response.recovered;
                 document.querySelector('.deaths').textContent = response.deaths;
                 document.querySelector('.plusCases').textContent = response.todayCases;
