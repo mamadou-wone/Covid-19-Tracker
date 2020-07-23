@@ -4,6 +4,12 @@ let totalCase = document.getElementById('totalCases');
 let recovered = document.getElementById('recovered');
 let deaths = document.getElementById('deaths');
 
+let sortedCases = [];
+let sortedCountry = [];
+let data = [
+    [],
+    []
+];
 
 
 
@@ -25,16 +31,25 @@ const allCaseApi = 'https://disease.sh/v3/covid-19/all/';
 // }
 
 
-function surround(number) {
-    if (number > 1000) {
-        return (number / 1000).toFixed(1) + 'K';
-    } else if (number > 10000000) {
-        return ((number) / 1000000).toFixed(1) + 'M'
-    } else {
+function suroundNumber(number) {
+    if (number < 1000) {
         return number;
+    } else if (number > 1000 && number < 1000000) {
+        return (number / 1000).toFixed(1) + 'K';
+    } else if (number > 1000000 && number < 10000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else {
+        return (number / 1000000).toFixed(1) + 'M';
     }
 }
 
+function getPlus(number) {
+    if (number == 0) {
+        return '';
+    } else {
+        return '+';
+    }
+}
 
 function getAllCase() {
     let request = new XMLHttpRequest();
@@ -47,12 +62,12 @@ function getAllCase() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 let response = request.response;
-                document.querySelector('.totalCases').textContent = response.cases > 10000000 ? ((response.cases) / 1000000).toFixed(1) + 'M' : response.cases;
-                document.querySelector('.recovered').textContent = response.recovered;
-                document.querySelector('.deaths').textContent = response.deaths;
-                document.querySelector('.plusCases').textContent = response.todayCases;
-                document.querySelector('.plusRecovered').textContent = response.todayRecovered;
-                document.querySelector('.plusDeath').textContent = response.todayDeaths;
+                document.querySelector('.totalCases').textContent = getPlus(parseFloat(response.cases)) + suroundNumber(parseFloat(response.cases)) + 'total';
+                document.querySelector('.recovered').textContent = getPlus(parseFloat(response.recovered)) + suroundNumber(parseFloat(response.recovered)) + 'total';
+                document.querySelector('.deaths').textContent = getPlus(parseFloat(response.deaths)) + suroundNumber(parseFloat(response.deaths)) + 'total';
+                document.querySelector('.plusCases').textContent = getPlus(parseFloat(response.todayCases)) + suroundNumber(parseFloat(response.todayCases));
+                document.querySelector('.plusRecovered').textContent = getPlus(parseFloat(response.todayRecovered)) + suroundNumber(parseFloat(response.todayRecovered));
+                document.querySelector('.plusDeath').textContent = getPlus(parseFloat(response.todayDeaths)) + suroundNumber(parseFloat(response.todayDeaths));
             } else {
                 alert('Une erreur est intervenue');
             }
@@ -86,29 +101,39 @@ function getCountryCase() {
                     let trCountry = document.createElement('tr');
                     let tdCountry = document.createElement('td');
                     let tdCases = document.createElement('td');
+                    sortedCases.push(element.cases);
+                    sortedCases.sort((a, b) => b - a);
                     tdCountry.textContent = element.country;
                     tdCases.textContent = element.cases;
                     trCountry.append(tdCountry);
                     trCountry.append(tdCases);
                     countryTable.append(trCountry);
 
+                    data[0].push(element.cases);
+                    data[1].push(element.country);
+
+
                     trCountry.addEventListener('click', () => {
+
                         map(element.countryInfo.long, element.countryInfo.lat, element.countryInfo.flag, element.country);
-                        document.querySelector('.totalCases').textContent = element.cases;
-                        document.querySelector('.recovered').textContent = element.recovered;
-                        document.querySelector('.deaths').textContent = element.deaths;
-                        document.querySelector('.plusCases').textContent = element.todayCases;
-                        document.querySelector('.plusRecovered').textContent = element.todayRecovered;
-                        document.querySelector('.plusDeath').textContent = element.todayDeaths;
+                        document.querySelector('.totalCases').textContent = getPlus(parseFloat(element.cases)) + suroundNumber(parseFloat(element.cases)) + ' total';
+                        document.querySelector('.recovered').textContent = getPlus(parseFloat(element.recovered)) + suroundNumber(parseFloat(element.recovered)) + ' total';
+                        document.querySelector('.deaths').textContent = getPlus(parseFloat(element.deaths)) + suroundNumber(parseFloat(element.deaths)) + ' total';
+                        document.querySelector('.plusCases').textContent = getPlus(parseFloat(element.todayCases)) + suroundNumber(parseFloat(element.todayCases));
+                        document.querySelector('.plusRecovered').textContent = getPlus(parseFloat(element.todayRecovered)) + suroundNumber(parseFloat(element.todayRecovered));
+                        document.querySelector('.plusDeath').textContent = getPlus(parseFloat(element.todayDeaths)) + suroundNumber(parseFloat(element.todayDeaths));
                     })
 
                 }
             } else {
                 alert('Une erreur est intervenue');
             }
+            console.log(data[0].sort((a, b) => b - a));
         }
     }
 }
+
+
 
 function map(lgn = -14, lat = 14, flag = 'https://disease.sh/assets/img/flags/sn.png', country = 'Senegal') {
     mapboxgl.accessToken = 'pk.eyJ1IjoibXdvbmU0NzIiLCJhIjoiY2tjeGZ2N2kyMG5jdTJybWpoYjZjOW9oNiJ9.u3xPrAaEvDiaeqwH3wTHOg';
