@@ -89,13 +89,22 @@ body {
     transition: 0.3s;
 }
 
-#displayMap {
+#chart {
     background-color: white;
     height: 340px;
-    margin: 13px;
+    margin: 15px;
+    padding-top: 25px;
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
+}
+
+#myChart {
+    /* height: 540px; */
+    margin: -5px;
+    padding: -15px;
+    padding-bottom: 0.5;
+    /* width: 500px; */
 }
 
 .mapboxgl-popup {
@@ -145,6 +154,13 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
+
+
+/* #status:active {
+    background-color: red;
+    border-top-color: 'red';
+    border-color: 'red';
+} */
 
 #status:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);

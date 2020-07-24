@@ -3,7 +3,13 @@ let countryTable = document.querySelector('tbody');
 let totalCase = document.getElementById('totalCases');
 let recovered = document.getElementById('recovered');
 let deaths = document.getElementById('deaths');
+let divStatus = document.getElementById('status');
 
+// divStatus.addEventListener('click', () => {
+//     document.getElementById("status").style.borderTopColor = "red";
+// })
+
+let todayDeath;
 let sortedCases = [];
 let sortedCountry = [];
 let data = [
@@ -51,6 +57,39 @@ function getPlus(number) {
     }
 }
 
+
+function addChart(todayCases, critical, totalDeaths, todayRecovered) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+
+        // The data for our dataset
+        data: {
+            labels: ['TodayCases', 'Critical', 'TotalDeath', 'Todayrecovered'],
+            datasets: [{
+                label: 'Worldwide State ',
+                backgroundColor: [
+                    'orange',
+                    'rgb(255, 99, 132)',
+                    'red',
+                    '#63D267',
+
+                    // '#CEA74D',
+                    // 'orange',
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [todayCases, critical, totalDeaths, todayRecovered, 20, 30, 45]
+            }]
+        },
+
+        // Configuration options go here
+        options: {}
+    });
+}
+
+
+
 function getAllCase() {
     let request = new XMLHttpRequest();
     request.open('GET', allCaseApi);
@@ -62,6 +101,8 @@ function getAllCase() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 let response = request.response;
+                todayDeath = response.todayDeaths;
+                addChart(response.todayCases, response.critical, todayDeath, response.todayRecovered);
                 document.querySelector('.totalCases').textContent = getPlus(parseFloat(response.cases)) + suroundNumber(parseFloat(response.cases)) + 'total';
                 document.querySelector('.recovered').textContent = getPlus(parseFloat(response.recovered)) + suroundNumber(parseFloat(response.recovered)) + 'total';
                 document.querySelector('.deaths').textContent = getPlus(parseFloat(response.deaths)) + suroundNumber(parseFloat(response.deaths)) + 'total';
@@ -73,9 +114,11 @@ function getAllCase() {
             }
         }
     }
+
 }
 
 getAllCase();
+
 
 function getCountryCase() {
     let request = new XMLHttpRequest();
@@ -128,7 +171,7 @@ function getCountryCase() {
             } else {
                 alert('Une erreur est intervenue');
             }
-            console.log(data[0].sort((a, b) => b - a));
+            // console.log(data[0].sort((a, b) => b - a));
         }
     }
 }

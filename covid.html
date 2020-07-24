@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
     <title>Covid-19 Tracker</title>
@@ -14,6 +14,8 @@
 </head>
 
 <body>
+
+
     <style>
         .mapboxgl-popup {
             max-width: 400px;
@@ -70,7 +72,8 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col" id="displayMap">
+                        <div class="col" id="chart">
+                            <canvas id="myChart" width="400" height="400"></canvas>
                         </div>
                     </div>
                 </div>
