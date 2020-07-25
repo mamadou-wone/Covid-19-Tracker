@@ -5,37 +5,15 @@ let recovered = document.getElementById('recovered');
 let deaths = document.getElementById('deaths');
 let divStatus = document.getElementById('status');
 
-// divStatus.addEventListener('click', () => {
-//     document.getElementById("status").style.borderTopColor = "red";
-// })
-
 let todayDeath;
-let sortedCases = [];
-let sortedCountry = [];
-let data = [
-    [],
-    []
-];
-
+let longCountry = [];
+let latCountry = [];
+let countryName = [];
+let countryFlag = [];
 
 
 const apiUrl = 'https://disease.sh/v3/covid-19/countries/';
 const allCaseApi = 'https://disease.sh/v3/covid-19/all/';
-
-// const sortData = (data) => {
-
-//     const sortedData = [...data];
-//     sortData.sort((a, b) => {
-//         if (a.cases > b.cases) {
-//             return -1;
-//         } else {
-//             return 1;
-//         }
-//     });
-//     return sortData;
-
-// }
-
 
 function suroundNumber(number) {
     if (number < 1000) {
@@ -133,27 +111,22 @@ function getCountryCase() {
                 let response = request.response;
                 for (let index = 0; index < response.length; index++) {
                     const element = response[index];
-                    let option = document.createElement('option');
-                    option.textContent = element.country;
-                    select.append(option);
-                    // select.onchange = () => {
-                    //     map(element.countryInfo.long, element.countryInfo.lat, select.value);
-                    //     console.log(select.value);
-                    // }
+                    countryName.push(element.country);
+                    longCountry.push(element.countryInfo.long);
+                    latCountry.push(element.countryInfo.lat);
+                    countryFlag.push(element.countryInfo.flag);
+
+
+
 
                     let trCountry = document.createElement('tr');
                     let tdCountry = document.createElement('td');
                     let tdCases = document.createElement('td');
-                    sortedCases.push(element.cases);
-                    sortedCases.sort((a, b) => b - a);
                     tdCountry.textContent = element.country;
                     tdCases.textContent = element.cases;
                     trCountry.append(tdCountry);
                     trCountry.append(tdCases);
                     countryTable.append(trCountry);
-
-                    data[0].push(element.cases);
-                    data[1].push(element.country);
 
 
                     trCountry.addEventListener('click', () => {
@@ -171,7 +144,23 @@ function getCountryCase() {
             } else {
                 alert('Une erreur est intervenue');
             }
-            // console.log(data[0].sort((a, b) => b - a));
+
+
+            for (let index = 0; index < countryName.length; index++) {
+                const element = countryName[index];
+                let option = document.createElement('option');
+                option.textContent = element;
+                select.append(option);
+                select.onchange = () => {
+                    let indexNumber = countryName.indexOf(select.value);
+                    let value = select.value;
+                    let lat = latCountry[indexNumber];
+                    let long = longCountry[indexNumber];
+                    let flag = countryFlag[indexNumber];
+                    map(long, lat, flag, value);
+
+                }
+            }
         }
     }
 }
