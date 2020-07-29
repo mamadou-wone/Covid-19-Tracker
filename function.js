@@ -1,4 +1,4 @@
-export function suroundNumber(number) {
+function suroundNumber(number) {
     if (number < 1000) {
         return number;
     } else if (number > 1000 && number < 1000000) {
