@@ -94,6 +94,10 @@
     cursor: pointer;
 }
 
+#option {
+    background-image: url(https://disease.sh/assets/img/flags/af.png);
+}
+
 .scrollbar {
     float: left;
     height: 300px;

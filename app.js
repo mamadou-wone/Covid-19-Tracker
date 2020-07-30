@@ -45,7 +45,6 @@ function getCaseByCountry() {
                     tdCase.textContent = element.cases;
                     tr.append(tdFlag, tdCountrie, tdCase);
                     document.querySelector('tbody').append(tr);
-                    console.log(tr);
 
                 }
             } else {
