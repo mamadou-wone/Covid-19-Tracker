@@ -89,6 +89,9 @@ function getCaseByCountry() {
             tdCase.textContent = caseTab[0][index];
             tr.append(tdFlag, tdCountrie, tdCase);
             document.querySelector('tbody').append(tr);
+            tr.addEventListener('click', () => {
+                console.log(indexCountry);
+            })
         }
 
 
