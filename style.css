@@ -3,30 +3,89 @@
 }
 
 #active {
-    font-weight: 700;
+    font-weight: 1000;
     text-transform: uppercase;
-    color: rgb(172, 197, 224);
+    color: rgb(41, 77, 116);
     margin-bottom: .75rem;
     font-size: 1rem;
     line-height: 1.2;
+    margin-left: 30px;
+    /* margin: 10px; */
+}
+
+#recovered {
+    font-weight: 1000;
+    text-transform: uppercase;
+    color: rgb(74, 211, 69);
+    margin-bottom: .75rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-left: 30px;
+    /* margin: 10px; */
+}
+
+#death {
+    font-weight: 1000;
+    text-transform: uppercase;
+    color: red;
+    margin-bottom: .75rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-left: 30px;
     /* margin: 10px; */
 }
 
 #todayNew {
     font-weight: 600;
     font-size: 1.3rem;
-    color: rgb(172, 197, 224);
+    color: rgb(41, 77, 116);
     font-family: monospace !important;
-    /* margin-top: -.375rem;
-    line-height: 1; */
-    /* margin-block-start: 0.2em;
-    margin-block-end: 0.5em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px; */
+    margin: -12px;
+    padding-left: 90px;
+}
+
+#todayRecovered {
+    font-weight: 1000;
+    font-size: 1.3rem;
+    color: rgb(74, 211, 69);
+    font-family: monospace !important;
+    margin: -12px;
+    padding-left: 90px;
+}
+
+#todayDeath {
+    font-weight: 1000;
+    font-size: 1.3rem;
+    color: red;
+    font-family: monospace !important;
+    margin: -12px;
+    padding-left: 90px;
 }
 
 #activeIcon {
-    color: rgb(172, 197, 224);
+    color: rgb(41, 77, 116);
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+#recoveredIcon {
+    color: rgb(74, 211, 69);
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+}
+
+#deathIcon {
+    color: red;
     font-weight: 900;
     font-family: "Font Awesome 5 Free";
     display: inline-block;
@@ -37,6 +96,20 @@
 }
 
 #totalCase {
+    font-family: 'Space Mono', monospace !important;
+    font-weight: 700!important;
+    color: rgb(158, 150, 137) !important;
+    font-size: 0.8rem;
+}
+
+#totalRecovered {
+    font-family: 'Space Mono', monospace !important;
+    font-weight: 700!important;
+    color: rgb(158, 150, 137) !important;
+    font-size: 0.8rem;
+}
+
+#totalDeath {
     font-family: 'Space Mono', monospace !important;
     font-weight: 700!important;
     color: rgb(158, 150, 137) !important;
@@ -60,6 +133,7 @@
 }
 
 #stats {
+    cursor: pointer;
     background-color: white;
     height: 125px;
     margin: 16px;
@@ -71,9 +145,10 @@
     box-shadow: 5px 10px 18px rgba(100, 98, 98, 0.5);
 }
 
-#stats:hover {
+
+/* #stats:hover {
     border: 2px solid#F6595A
-}
+} */
 
 .col .stats.active {
     background-color: #9c9fa3;

@@ -10,7 +10,14 @@ let newCaseTab = [
     [],
     [],
     []
-]
+];
+
+let todayNew = document.querySelector('#todayNew');
+let todayRecovered = document.querySelector('#todayRecovered');
+let todayDeath = document.querySelector('#todayDeath');
+let totalCases = document.querySelector('#totalCase');
+let totalRecovered = document.querySelector('#totalRecovered');
+let totalDeath = document.querySelector('#totalDeath');
 
 function getWordStat() {
     let request = new XMLHttpRequest();
@@ -22,7 +29,13 @@ function getWordStat() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 let response = request.response;
-                console.log(response);
+                todayNew.textContent = new Intl.NumberFormat('ja-JP').format(response.todayCases) + ' today';
+                todayRecovered.textContent = new Intl.NumberFormat('ja-JP').format(response.todayRecovered) + ' today';
+                todayDeath.textContent = new Intl.NumberFormat('ja-JP').format(response.todayDeaths) + ' today';
+                totalCases.textContent = suroundNumber(response.cases) + ' total';
+                totalRecovered.textContent = suroundNumber(response.recovered) + ' total';
+                totalDeath.textContent = suroundNumber(response.deaths) + ' total';
+
             } else {
                 alert('Une erreur est survenue !');
             }
@@ -86,11 +99,11 @@ function getCaseByCountry() {
             let tdCountrie = document.createElement('td');
             tdCountrie.textContent = indexCountry;
             let tdCase = document.createElement('td');
-            tdCase.textContent = caseTab[0][index];
+            tdCase.textContent = new Intl.NumberFormat('ja-JP').format(caseTab[0][index]);
             tr.append(tdFlag, tdCountrie, tdCase);
             document.querySelector('tbody').append(tr);
             tr.addEventListener('click', () => {
-                console.log(indexCountry);
+                console.log('click');
             })
         }
 
@@ -98,4 +111,5 @@ function getCaseByCountry() {
     }
 }
 
+getWordStat();
 getCaseByCountry();
