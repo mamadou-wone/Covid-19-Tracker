@@ -140,7 +140,7 @@ function getCaseByCountry() {
             tr.append(tdFlag, tdCountrie, tdCase);
             document.querySelector('tbody').append(tr);
             tr.addEventListener('click', () => {
-                console.log(indexLat);
+                getMap(indexLong, indexLat, indexFlag, indexCountry);
                 document.querySelector('#totalCase').textContent = suroundNumber(countrieInfo[0][index]) + ' Total';
                 document.querySelector("#todayNew").textContent = new Intl.NumberFormat('ja-JP').format(indexTodayCases) + ' Today';
                 document.querySelector('#todayRecovered').textContent = new Intl.NumberFormat('ja-JP').format(indexTodayRecovered) + ' Today';
@@ -154,5 +154,31 @@ function getCaseByCountry() {
     }
 }
 
+
+function getMap(long = -14, lat = 14, flag = "https://disease.sh/assets/img/flags/sn.png", country = 'Senegal') {
+    mapboxgl.accessToken = 'pk.eyJ1IjoibXdvbmU0NzIiLCJhIjoiY2tjeGZ2N2kyMG5jdTJybWpoYjZjOW9oNiJ9.u3xPrAaEvDiaeqwH3wTHOg';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [long, lat], // long/lat
+        zoom: 5
+    });
+    var marker = new mapboxgl.Marker()
+        .setLngLat([long, lat])
+        .setPopup(new mapboxgl.Popup({ offset: 25 })
+            .setHTML("<img src = " + flag + " class = 'img'>" + '</img><p style= "font-weight = bold;">' + country + '</p>'))
+        .addTo(map);
+    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+            positionOptions: {
+                enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        })
+    )
+}
+
+getMap();
 getWordStat();
 getCaseByCountry();
