@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/91c5fc95dd.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css' rel='stylesheet' />
 
@@ -106,7 +107,13 @@
                     </div>
 
                 </div>
-            </div>
+            </div><br>
+
+        </div>
+        <div class="row stats-container">
+            <div class="col-12 col-md-4 md-3 md-md-0" id=""><canvas id="" height="200"></canvas></div>
+            <div class="col-12 col-md-4 md-3 md-md-0" id="infoChart"><canvas id="myChart" height="200"></canvas></div>
+            <!-- <div class="col-12 col-md-4 md-3 md-md-0" id="infoChart"><canvas id="myChart" height="200"></canvas></div> -->
         </div>
     </div>
 

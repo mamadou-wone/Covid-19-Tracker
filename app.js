@@ -43,13 +43,13 @@ function getWordStat() {
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) {
                 let response = request.response;
-                todayNew.textContent = new Intl.NumberFormat('ja-JP').format(response.todayCases) + ' today';
-                todayRecovered.textContent = new Intl.NumberFormat('ja-JP').format(response.todayRecovered) + ' today';
-                todayDeath.textContent = new Intl.NumberFormat('ja-JP').format(response.todayDeaths) + ' today';
-                totalCases.textContent = suroundNumber(response.cases) + ' total';
-                totalRecovered.textContent = suroundNumber(response.recovered) + ' total';
-                totalDeath.textContent = suroundNumber(response.deaths) + ' total';
-
+                todayNew.textContent = '+' + new Intl.NumberFormat('ja-JP').format(response.todayCases) + ' today';
+                todayRecovered.textContent = '+' + new Intl.NumberFormat('ja-JP').format(response.todayRecovered) + ' today';
+                todayDeath.textContent = '+' + new Intl.NumberFormat('ja-JP').format(response.todayDeaths) + ' today';
+                totalCases.textContent = '+' + suroundNumber(response.cases) + ' total';
+                totalRecovered.textContent = '+' + suroundNumber(response.recovered) + ' total';
+                totalDeath.textContent = '+' + suroundNumber(response.deaths) + ' total';
+                myChart(response.todayCases, response.active, response.cases);
             } else {
                 alert('Une erreur est survenue !');
             }
@@ -141,12 +141,12 @@ function getCaseByCountry() {
             document.querySelector('tbody').append(tr);
             tr.addEventListener('click', () => {
                 getMap(indexLong, indexLat, indexFlag, indexCountry);
-                document.querySelector('#totalCase').textContent = suroundNumber(countrieInfo[0][index]) + ' Total';
-                document.querySelector("#todayNew").textContent = new Intl.NumberFormat('ja-JP').format(indexTodayCases) + ' Today';
-                document.querySelector('#todayRecovered').textContent = new Intl.NumberFormat('ja-JP').format(indexTodayRecovered) + ' Today';
-                document.querySelector('#totalRecovered').textContent = suroundNumber(indexRecovered) + ' Total';
-                document.querySelector('#todayDeath').textContent = new Intl.NumberFormat('ja-JP').format(indexTodayDeaths) + ' Today';
-                document.querySelector('#totalDeath').textContent = suroundNumber(indexDeath) + ' Total';
+                document.querySelector('#totalCase').textContent = '+' + suroundNumber(countrieInfo[0][index]) + ' Total';
+                document.querySelector("#todayNew").textContent = '+' + new Intl.NumberFormat('ja-JP').format(indexTodayCases) + ' Today';
+                document.querySelector('#todayRecovered').textContent = '+' + new Intl.NumberFormat('ja-JP').format(indexTodayRecovered) + ' Today';
+                document.querySelector('#totalRecovered').textContent = '+' + suroundNumber(indexRecovered) + ' Total';
+                document.querySelector('#todayDeath').textContent = '+' + new Intl.NumberFormat('ja-JP').format(indexTodayDeaths) + ' Today';
+                document.querySelector('#totalDeath').textContent = '+' + suroundNumber(indexDeath) + ' Total';
             })
         }
 
@@ -177,6 +177,43 @@ function getMap(long = -14, lat = 14, flag = "https://disease.sh/assets/img/flag
             trackUserLocation: true
         })
     )
+}
+
+
+function myChart(todayCase, activeCase, totalCases) {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['TodayCase', 'ActiveCase', 'TotalCase'],
+            datasets: [{
+                label: '# of Votes',
+                data: [todayCase, activeCase, totalCases],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 }
 
 getMap();

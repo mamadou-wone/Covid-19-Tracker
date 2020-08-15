@@ -159,6 +159,23 @@
     box-shadow: 5px 10px 18px rgba(100, 98, 98, 0.5);
 }
 
+#infoChart {
+    cursor: pointer;
+    background-color: white;
+    height: 300px;
+    margin: 16px;
+    border-radius: 10px;
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s; */
+    transition: all .5s ease;
+    transform: translateY(-5px);
+    box-shadow: 5px 10px 18px rgba(100, 98, 98, 0.5);
+}
+
+#infoChart:hover {
+    border: 9px solid #F5F5F5;
+}
+
 
 /* #stats:hover {
     border: 2px solid#F6595A
