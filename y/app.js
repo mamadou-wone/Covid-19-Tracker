@@ -10,10 +10,12 @@ let countrieInfo = [
     [],
     [],
     [],
+    [],
     []
 ];
 
 let newCountrieInfo = [
+    [],
     [],
     [],
     [],
@@ -49,7 +51,7 @@ function getWordStat() {
                 totalCases.textContent = '+' + suroundNumber(response.cases) + ' total';
                 totalRecovered.textContent = '+' + suroundNumber(response.recovered) + ' total';
                 totalDeath.textContent = '+' + suroundNumber(response.deaths) + ' total';
-                myChart(response.todayCases, response.active, response.cases);
+                myChart(response.todayCases, response.critical, response.todayDeaths, response.todayRecovered);
             } else {
                 alert('Une erreur est survenue !');
             }
@@ -80,6 +82,7 @@ function getCaseByCountry() {
                     newCountrieInfo[7].push(element.todayRecovered);
                     newCountrieInfo[8].push(element.countryInfo.lat); //26.countryInfo.lat
                     newCountrieInfo[9].push(element.countryInfo.long);
+                    newCountrieInfo[10].push(element.critical);
                     // Tableau Initial
                     countrieInfo[0].push(element.cases);
                     countrieInfo[1].push(element.country);
@@ -91,6 +94,7 @@ function getCaseByCountry() {
                     countrieInfo[7].push(element.todayRecovered);
                     countrieInfo[8].push(element.countryInfo.lat);
                     countrieInfo[9].push(element.countryInfo.long);
+                    countrieInfo[10].push(element.critical);
 
                     let option = document.createElement('option');
                     option.style.backgroundImage = `url(${element.countryInfo.flag})`;
@@ -125,7 +129,7 @@ function getCaseByCountry() {
             const indexTodayRecovered = countrieInfo[7][newCountrieInfo[0].indexOf(countrieInfo[0][index])];
             const indexLat = countrieInfo[8][newCountrieInfo[0].indexOf(countrieInfo[0][index])];
             const indexLong = countrieInfo[9][newCountrieInfo[0].indexOf(countrieInfo[0][index])];
-
+            const indexCritical = countrieInfo[10][newCountrieInfo[0].indexOf(countrieInfo[0][index])];
             let tr = document.createElement('tr');
             let tdFlag = document.createElement('td');
             let flag = document.createElement('img');
@@ -147,7 +151,8 @@ function getCaseByCountry() {
                 document.querySelector('#totalRecovered').textContent = '+' + suroundNumber(indexRecovered) + ' Total';
                 document.querySelector('#todayDeath').textContent = '+' + new Intl.NumberFormat('ja-JP').format(indexTodayDeaths) + ' Today';
                 document.querySelector('#totalDeath').textContent = '+' + suroundNumber(indexDeath) + ' Total';
-            })
+                myChart(indexTodayCases, indexCritical, indexTodayDeaths, indexTodayRecovered);
+            });
         }
 
 
@@ -180,25 +185,27 @@ function getMap(long = -14, lat = 14, flag = "https://disease.sh/assets/img/flag
 }
 
 
-function myChart(todayCase, activeCase, totalCases) {
+function myChart(todayCase, critical, todayDeath, totalRecovered) {
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['TodayCase', 'ActiveCase', 'TotalCase'],
+            labels: ['TodayCase', 'Critical', 'TodayDeath', 'TodayRecovered'],
             datasets: [{
-                label: '# of Votes',
-                data: [todayCase, activeCase, totalCases],
+                label: 'Today Live info',
+                data: [todayCase, critical, todayDeath, totalRecovered],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
+                    'orange',
+                    'rgb(255, 99, 132)',
+                    'red',
+                    '#63D267',
 
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
+                    'orange',
+                    'rgb(255, 99, 132)',
+                    'red',
+                    '#63D267',
 
                 ],
                 borderWidth: 1
